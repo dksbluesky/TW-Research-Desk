@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f0f4f8">
+  <meta name="description" content="台股研究桌：機會篩選、技術分析、策略回測、組合風險與交易檢討。">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <title>台股研究桌 · TW Research Desk</title>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="mark">研</span><div><strong>台股研究桌</strong><small>TW RESEARCH DESK</small></div></div>
+    <button id="settings-button" class="quiet-button" type="button">⚙ 設定</button>
+  </header>
+  <main>
+    <section class="hero">
+      <div><p class="eyebrow">AFTER-MARKET RESEARCH</p><h1>五個研究工作，一個畫面完成。</h1><p>直接讀取 ETF_DCA-plan 的持股與交易紀錄，搭配 Fugle 歷史行情。所有結論附資料日期與規則。</p></div>
+      <div class="hero-status"><span class="status-dot"></span><span id="source-status">正在檢查資料來源…</span></div>
+    </section>
+    <nav class="tabs" aria-label="研究功能">
+      <button type="button" class="tab active" data-tab="ideas">今日機會</button>
+      <button type="button" class="tab" data-tab="technical">技術分析</button>
+      <button type="button" class="tab" data-tab="backtest">策略回測</button>
+      <button type="button" class="tab" data-tab="risk">組合風險</button>
+      <button type="button" class="tab" data-tab="journal">交易檢討</button>
+    </nav>
+    <section class="toolbar">
+      <div><h2 id="section-title">今日機會</h2><p id="section-description">固定台股入門清單，加上 ETF_DCA-plan 持股。</p></div>
+      <div class="toolbar-actions"><label id="symbol-control" class="select-wrap">標的 <select id="symbol-select"></select></label><button id="run-button" class="primary-button" type="button">更新分析</button></div>
+    </section>
+    <section id="journal-controls" class="journal-controls" aria-label="交易檢討篩選" hidden>
+      <label>起始日期 <input id="journal-from" type="date"></label>
+      <label>結束日期 <input id="journal-to" type="date"></label>
+      <label>標的 <select id="journal-ticker"><option value="">全部標的</option></select></label>
+      <label>動作 <select id="journal-side"><option value="">買入與賣出</option><option value="buy">買入</option><option value="sell">賣出</option></select></label>
+      <p class="filter-hint">四個條件可一起使用；每頁顯示最多 20 筆。</p>
+      <button id="journal-apply" class="primary-button" type="button">套用篩選</button>
+      <button id="journal-reset" class="quiet-button" type="button">清除篩選</button>
+    </section>
+    <p id="message" class="message" role="status" aria-live="polite">請在設定輸入 Fugle API Key，之後點「更新分析」。</p>
+    <section id="results" class="results" aria-live="polite"></section>
+    <nav id="journal-pager" class="journal-pager" aria-label="交易紀錄分頁" hidden><button id="journal-prev" class="quiet-button" type="button">上一頁</button><span id="journal-page-status"></span><button id="journal-next" class="quiet-button" type="button">下一頁</button></nav>
+    <footer>研究用途 · 不連接券商、不下單 · 盤後資料可能延遲，請以畫面所示日期為準。</footer>
+  </main>
+  <dialog id="settings-dialog">
+    <form method="dialog" class="settings-form">
+      <div class="dialog-head"><h2>資料設定</h2><button type="submit" class="quiet-button">✕</button></div>
+      <p>只需設定一次 Fugle Key。持股和交易紀錄由 ETF_DCA-plan 的公開 GitHub <code>main</code> 唯讀載入；不需要 GitHub Token。</p>
+      <label for="fugle-key">Fugle Market Data API Key</label>
+      <input id="fugle-key" type="password" autocomplete="off" placeholder="貼上 API Key">
+      <div class="dialog-actions"><button id="clear-key" type="button" class="quiet-button">清除金鑰</button><button id="save-key" type="button" class="primary-button">儲存於此瀏覽器</button></div>
+      <p class="small">金鑰僅儲存於此瀏覽器，不會寫入 GitHub。不同裝置需各自設定。持股來源是公開儲存庫；此工具不會將它複製到自己的程式庫。</p>
+      <p class="small"><a href="https://github.com/dksbluesky/ETF_DCA-plan/blob/main/portfolio-data.json" target="_blank" rel="noopener noreferrer">檢視原始持股檔</a> · <a href="https://developer.fugle.tw/docs/data/http-api/historical/candles/" target="_blank" rel="noopener noreferrer">Fugle 資料說明</a></p>
+    </form>
+  </dialog>
+  <script src="engine.js"></script>
+  <script src="charts.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
